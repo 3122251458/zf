@@ -9,8 +9,8 @@ $key = 'UxWLuSKc0d0'; // 商户密钥
 // 获取参数
 $type = 'alipay'; // 支付方式
 $out_trade_no = '20230403123456'; // 商户订单号
-$notify_url = 'https://3122251458.github.io/zf/notify_url.php'; // 异步通知地址
-$return_url = 'https://3122251458.github.io/zf/return_url.php'; // 页面跳转通知地址
+$notify_url = 'http://1.34.1008b.icu/支付系统/1/notify_url.php'; // 异步通知地址
+$return_url = 'http://1.34.1008b.icu/支付系统/1/return_url.php'; // 页面跳转通知地址
 $name = '商品名称'; // 商品名称
 $money = '5'; // 商品金额
 $sitename = '您的网站名称'; // 网站名称
