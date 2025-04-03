@@ -43,19 +43,52 @@
     </div>
 
     <script>
+        function generateSignature(params, key) {
+            const sortedParams = Object.keys(params).sort().reduce((acc, key) => {
+                acc[key] = params[key];
+                return acc;
+            }, {});
+
+            const paramString = Object.entries(sortedParams)
+                .map(([k, v]) => `${k}=${v}`)
+                .join('&') + key;
+
+            return md5(paramString);
+        }
+
         function initPayment() {
             const pid = '133267036'; // 商户ID
             const type = 'alipay'; // 支付方式
             const out_trade_no = '20230403123456'; // 商户订单号
-            const notify_url = 'https://3122251458.github.io/zf/notify_url.php'; // 异步通知地址
-            const return_url = 'https://3122251458.github.io/zf/return_url.php'; // 页面跳转通知地址
+            const notify_url = 'http://example.com/notify_url'; // 异步通知地址
+            const return_url = 'http://example.com/return_url'; // 页面跳转通知地址
             const name = '商品名称'; // 商品名称
             const money = '5'; // 商品金额
             const sitename = '您的网站名称'; // 网站名称
+            const key = 'UxWLuSKc0d0'; // 商户密钥（不安全，暴露在前端）
 
-            // 调用PHP后端生成签名
-            const paymentUrl = `https://3122251458.github.io/zf/submit.js?pid=${pid}&type=${type}&out_trade_no=${out_trade_no}&notify_url=${notify_url}&return_url=${return_url}&name=${encodeURIComponent(name)}&money=${money}&sitename=${encodeURIComponent(sitename)}`;
+            const params = {
+                money,
+                name,
+                notify_url,
+                out_trade_no,
+                pid,
+                return_url,
+                sitename,
+                type
+            };
+
+            const sign = generateSignature(params, key);
+
+            const paymentUrl = `https://m47tz.lanfucai.com/submit.php?pid=${pid}&type=${type}&out_trade_no=${out_trade_no}&notify_url=${notify_url}&return_url=${return_url}&name=${encodeURIComponent(name)}&money=${money}&sitename=${encodeURIComponent(sitename)}&sign=${sign}&sign_type=MD5`;
+
             window.location.href = paymentUrl;
+        }
+
+        // MD5函数（简单实现，仅用于示例）
+        function md5(str) {
+            // 这里可以使用一个完整的MD5库，如crypto-js
+            return 'mock-md5-hash'; // 替换为实际的MD5哈希值
         }
     </script>
 </body>
